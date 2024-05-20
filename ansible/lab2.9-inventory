@@ -1,0 +1,5 @@
+[servers]
+serverb.lab.example.com
+
+[control]
+workstation.lab.example.com
