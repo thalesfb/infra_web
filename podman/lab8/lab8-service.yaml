@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: List
+items:
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: quotes-api
+      name: quotes-api
+    spec:
+      ports:
+        - port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        app: quotes-api
+
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: quotes-ui
+      name: quotes-ui
+    spec:
+      ports:
+        - port: 3000
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        app: quotes-ui
