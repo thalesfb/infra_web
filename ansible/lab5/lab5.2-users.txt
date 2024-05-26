@@ -1,0 +1,2 @@
+This block of text consists of two lines.
+They have been added by the blockinfile module.

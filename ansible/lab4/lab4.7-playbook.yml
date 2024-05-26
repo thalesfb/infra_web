@@ -1,8 +1,4 @@
-lab start 
-
-cd control-review
-
-edit aplaybook.yml 
+---
 - name: Playbook Control Lab
   hosts: webservers
   vars_files: vars.yml
@@ -66,14 +62,3 @@ edit aplaybook.yml
       ansible.builtin.service:
         name: "{{ web_service }}"
         state: restarted
-
-
-ansible-navigator run \
-
-
-> -m stdout playbook.yml
-
-
-curl -k -vvv https://serverb.lab.example.com
-
-lab grade control-review

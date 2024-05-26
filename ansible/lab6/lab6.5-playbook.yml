@@ -1,0 +1,13 @@
+---
+- name: Install and configure web service
+  hosts: server*.lab.example.com
+  tasks:
+    - name: Import the install and enable task file and set the variables
+      import_tasks: tasks/install_and_enable.yml
+      vars:
+        package: httpd
+        service: httpd
+        firewall_pkg: firewalld
+        firewall_svc: firewalld
+        rule:
+          - http
