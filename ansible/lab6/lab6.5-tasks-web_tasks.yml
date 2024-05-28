@@ -1,19 +1,19 @@
 ---
-  - name: Install {{ package }}
-    ansible.builtin.dnf:
-      name: "{{ package }}"
-      state: latest
-  - name: Enable and start {{ service }}
-    ansible.builtin.service:
-      name: "{{ service }}"
-      enabled: true
-      state: started
-  - name: Tuning configuration installed
-    ansible.builtin.copy:
-      src: ../files/tune.conf
-      dest: /etc/httpd/conf.d/tune.conf
-      owner: root
-      group: root
-      mode: 0644
-    notify:
-      - restart "{{ service }}"
+- import_tasks: tasks/install_and_enable.yml
+  vars:
+    packages:
+      - name: httpd
+    services:
+      - name: httpd
+        enabled: true
+        state: started
+
+- name: Tuning configuration installed
+  ansible.builtin.copy:
+    src: files/tune.conf
+    dest: /etc/httpd/conf.d/tune.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart httpd

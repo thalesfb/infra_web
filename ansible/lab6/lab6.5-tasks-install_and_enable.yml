@@ -1,13 +1,13 @@
 ---
-  - name: Import the web task file and set the variables
-    import_tasks: web_tasks.yml
-    vars:
-      package: "{{ package }}"
-      service: "{{ service }}"
-  - name: Import the firewall task file and set the variables
-    import_tasks: firewall_tasks.yml
-    vars:
-      package: "{{ firewall_pkg }}"
-      service: "{{ firewall_svc }}"
-      rule:
-        - "{{ rule }}"
+- name: Install packages
+  ansible.builtin.dnf:
+    name: "{{ item.name }}"
+    state: latest
+  loop: "{{ packages }}"
+
+- name: Enable and start services
+  ansible.builtin.service:
+    name: "{{ item.name }}"
+    enabled: "{{ item.enabled }}"
+    state: "{{ item.state }}"
+  loop: "{{ services }}"

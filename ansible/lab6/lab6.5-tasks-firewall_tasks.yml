@@ -1,17 +1,16 @@
 ---
-  - name: Install firewall
-    ansible.builtin.dnf:
-      name: "{{ package }}"
-      state: latest
-  - name: Enable and start the firewall
-    ansible.builtin.service:
-      name: "{{ service }}"
-      enabled: true
-      state: started
-  - name: Open the port for {{ rule }}
-    ansible.posix.firewalld:
-        service: "{{ item }}"
-        immediate: true
-        permanent: true
-        state: enabled
-    loop: "{{ rule }}"
+- import_tasks: tasks/install_and_enable.yml
+  vars:
+    packages:
+      - name: firewalld
+    services:
+      - name: firewalld
+        enabled: true
+        state: started
+
+- name: Open the port for http
+  ansible.posix.firewalld:
+    service: http
+    immediate: true
+    permanent: true
+    state: enabled
