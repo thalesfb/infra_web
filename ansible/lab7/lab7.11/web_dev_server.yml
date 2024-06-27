@@ -1,0 +1,17 @@
+---
+- name: Configure Dev Web Server
+  hosts: dev_webserver
+  force_handlers: true
+
+  pre_tasks:
+    - name: Ensure SELinux is configured
+      block:
+        - name: Include SELinux role
+          include_role:
+            name: rhel-system-roles.selinux
+      rescue:
+        - name: Fail if SELinux configuration fails
+          fail:
+            msg: 'SELinux configuration failed'
+  roles:
+    - role: apache.developer_configs

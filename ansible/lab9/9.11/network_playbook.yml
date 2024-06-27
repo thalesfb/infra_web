@@ -1,0 +1,13 @@
+---
+- name: Configure additional network interface
+  hosts: webservers
+  become: yes
+  roles:
+    - role: redhat.rhel_system_roles.network
+      vars:
+        network_connections:
+          - name: eth1
+            type: ethernet
+            ip:
+              address:
+                - 172.25.250.40/24

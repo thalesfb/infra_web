@@ -1,0 +1,23 @@
+---
+- name: Configure logical volumes and mount points
+  hosts: webservers
+  become: yes
+  collections:
+    - redhat.rhel_system_roles
+  tasks:
+    - name: Manage storage configuration
+      include_role:
+        name: storage
+      vars:
+        storage_pools:
+          - name: apache-vg
+            disks: [/dev/vdb]
+            volumes:
+              - name: content-lv
+                size: "64 MiB"
+                fs_type: xfs
+                mount_point: /var/www
+              - name: logs-lv
+                size: "128 MiB"
+                fs_type: xfs
+                mount_point: /var/log/httpd

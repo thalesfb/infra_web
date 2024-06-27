@@ -1,0 +1,14 @@
+---
+- name: Create and manage system crontab file
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Create a crontab file for disk usage monitoring
+      cron:
+        name: "Monitor disk usage"
+        user: devops
+        minute: "*/2"
+        hour: "9-16"
+        weekday: "1-5"
+        job: "df >> /home/devops/disk_usage"
+        cron_file: disk_usage

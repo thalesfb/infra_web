@@ -1,0 +1,18 @@
+---
+- name: Configure YUM repository and install rhelver
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Configure YUM repository
+      ansible.builtin.yum_repository:
+        name: example-internal
+        description: Example Inc. Internal YUM repo
+        baseurl: http://materials.example.com/yum/repository
+        gpgcheck: yes
+        gpgkey: http://materials.example.com/yum/repository/RPM-GPG-KEY-example
+        state: present
+
+    - name: Install rhelver package
+      ansible.builtin.yum:
+        name: rhelver
+        state: present

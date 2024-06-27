@@ -1,0 +1,19 @@
+---
+- name: Create users and groups
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Create webadmin group
+      ansible.builtin.group:
+        name: webadmin
+        state: present
+
+    - name: Add users ops1 and ops2
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: webadmin
+        append: yes
+        state: present
+      loop:
+        - ops1
+        - ops2
